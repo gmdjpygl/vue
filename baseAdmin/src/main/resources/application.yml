@@ -1,0 +1,56 @@
+ server:
+     #端口号
+     port: 9080
+ spring:
+   jackson:
+       #controller返回json数据日期格式化
+       date-format: yyyy-MM-dd HH:mm:ss
+       time-zone: GMT+8
+ #多数据源时datasourec.java无法默认引用mybatis.configration配置,需要手动引入,
+ mybatis:
+   configuration:
+      # 结果集内字段空时,返回null,否则不返回字段
+      call-setters-on-nulls: true
+      # 驼峰标示,只针对xml里bean映射,map结果集不起作用
+      map-underscore-to-camel-case: true
+ # 使用springboot自带的logback日志组件
+ logging:
+    file: 
+       # 日志保存路径
+       name: c:/logDemo/springBoot.log
+    level:
+     # 项目日志级别
+     #root: info  debug
+     # 包日志级别
+      com:
+         dataManage: info 
+ #定时任务
+ #设置为0 0 0 1 1 ?时,不执行任务
+ cron:
+     syncGWData: 0 0 0 1 1 ?  
+     syncRainData: 0 0 0 1 1 ?  
+     syncGwjcDs: 0 0 0 1 1 ?  
+     syncToHmcsRain: 0 0 0 1 1 ?   
+     cleanDataRec: 0 0 1 * * ?   # 清理明细数据
+     initDataExceptionCache: 0/30 * * * * ?   # 数据异常报警缓存初始化
+ # 上传路径
+ upload:
+    path: D:\\upload
+ 
+ # 对接聊城雨量地址
+ sync:
+    rain:
+       loginName: h220906thzh
+       password: h220906thzh
+       nodeId: 15
+       url: http://www.0531yun.com
+    
+ # 数值保留小数点位数
+ dataValue:
+    radix:
+       point: 2
+   # unit:
+    #   m: 46240,46244 # 单位是米数据,需要转化为cm
+ weather:
+    url: http://api.map.baidu.com/weather/v1/
+

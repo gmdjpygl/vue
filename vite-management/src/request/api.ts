@@ -19,9 +19,7 @@ interface AdminLoginRes{
 interface AdminInfoRes{
     menu:[]
 }
-interface AdminInfoRes{
-    menu:[]
-}
+
 interface AdminListParames{keyword:string;pageNum:number;pageSize:number}
 
 export const adminLoginApi = (data:AdminLoginData):PromiseRes<AdminLoginRes> =>request.post('admin/login',data);

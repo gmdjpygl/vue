@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import { App } from 'vue'
-import store from '../store'
+import {menuStore} from '../store/menuStore'
 import Cookies from 'js-cookie';
 import { getAdminInfoApi } from '../request/api'
 // import Vue from 'vue';
@@ -8,27 +8,24 @@ import { getAdminInfoApi } from '../request/api'
 //Vue2 use : 调用的就是参数上的install方法，或者是直接调用参数。Vue.prototype.$router/$route
 
 const routes: RouteRecordRaw[] = [
+  // 默认配置登录页面路由
   {
     path: '/login',
     name: 'login',
     component: () => import('../views/login/login.vue')
-  }
-
-  // http://localhost:3000/a/b/c  
-  // http://localhost:3000/a/b/pms/product
-  // http://localhost:3000/pms/product
+  },
   /* {
-    path: '/pms',
-    name: 'pms',
-    component: () => import('../views/homepage/homepage.vue'),
-    children: [
-      {
-        path: 'product', //  /product
-        name: 'product',
-        component: () => import('../views/pms/product.vue'),
-      }
-    ]
-  } */
+      path: '/pms',
+      name: 'pms',
+      component: () => import('../views/homepage/homepage.vue'),
+      children: [
+        {
+          path: 'product', //  /product
+          name: 'product',
+          component: () => import('../views/pms/product.vue'),
+        }
+      ]
+    } */
 ]
 
 const router = createRouter({
@@ -36,9 +33,12 @@ const router = createRouter({
   routes // 路由配置
 });
 
+
 // 根据getters里面的菜单对象生成路由规则
-const genRoutes = () => {
-  const menus = store.getters.getNewMenus;
+const genRoutes = () => { 
+  const mStore = menuStore();
+
+  const menus = mStore.getNewMenus;
   // const newRoutes: RouteRecordRaw[] = [];
   // 循环菜单对象
   for (let key in menus) {
@@ -55,17 +55,16 @@ const genRoutes = () => {
         name: menus[key].children[i].name,
         component: () => import(`../views/${menus[key].name}/${menus[key].children[i].name}.vue`)
       })
-    }
-
+    } 
     // 动态添加路由规则
     router.addRoute(newRoute)
   }
-  // 动态添加首页
+  // 动态添加首页 children展示在router-view里
   router.addRoute({
     path: '/',
     name: 'homepage',
     component: () => import('../views/homepage/homepage.vue'),
-    redirect: '/index',
+    redirect: 'index',
     children: [
       {
         path: 'index',
@@ -78,24 +77,36 @@ const genRoutes = () => {
 
 // 前置导航守卫
 router.beforeEach((to, from, next) => {
+  const mStore = menuStore();
+const {  getNewMenus } = mStore
   // 1.token && vuex里面menus（权限列表）为空
   const token = Cookies.get('token');
-  console.log(store);
-  if (token && store.state.menus.length === 0) {  // 登录后,vuex菜单为空时
+  
+  if (token && mStore.menus.length === 0) {  // 登录后,跳转页面或刷新时执行vuex菜单为空时
+        console.log('登录后,跳转页面或刷新时执行vuex菜单为空时');
          // 异步
-        store.dispatch('getAdminInfo').then(() => {
+         mStore.getMenus().then(() => {
+            mStore.getMenus(); 
             genRoutes();
             next(to);
-         });
-  } else if (token && store.state.menus.length !== 0 && from.path === '/login' && to.path === '/homepage') {// 
+         })
+       //  });
+  } else if (token && mStore.menus.length !== 0 && from.path === '/login' && to.path === '/homepage') {
+         console.log('第一次登录');
         // 动态添加路由规则
         genRoutes();
         next('/index');
   } else if (!token && to.path !== '/login') {
+        console.log('没有登录时打开页面');
         next('/login');
   } else if (token && to.path === '/login') {
+        console.log('登录后再次打开登录页面');
         next(from);
-  } else {
+  } else{
+        // 打开to页面
+        console.log('下一步');
+        //genRoutes()
+  //      console.log(router.getRoutes());
         next();
   }
 

@@ -3,3 +3,6 @@ interface AdminObjItf {
   id?:string;
   name?: string;
 }
+interface NewMenus {
+  [key: number]: menu
+}

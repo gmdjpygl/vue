@@ -37,7 +37,7 @@
 
 <script lang='ts' setup>
       import { reactive, toRefs, ref ,computed} from 'vue'
-      import {useStore} from 'vuex'
+      import {menuStore} from '../../store/menuStore'
       interface MenuObj {
         parentId: number;
         id: number;
@@ -54,10 +54,11 @@
       interface NewMenus {
         [key: number]: MenuObj
       }
-      const store = useStore();
+      //const store = useStore();
+      const mStore = menuStore();
      // const newMenus:NewMenus = store.getters.getNewMenus;
       // 计算属性
-      const newMenus = computed<NewMenus>(()=>store.getters.getNewMenus)
+      const newMenus = computed<NewMenus>(()=>mStore.getNewMenus) 
       // [{title: '一级菜单标题', children: [{二级菜单对象}, {二级菜单对象}]}, {。。。}]
       //{ 一级菜单id: {title: '一级菜单标题', children: [{二级菜单对象}, {二级菜单对象}]}}
 </script>

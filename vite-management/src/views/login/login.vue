@@ -18,7 +18,9 @@
 import { reactive, toRefs, ref,toRef} from 'vue'
 import { adminLoginApi ,getAdminInfoApi} from '../../request/api'
 import { useRouter } from 'vue-router' 
-import { useStore } from 'vuex' 
+//import { useStore } from 'vuex' 
+import {menuStore} from '../../store/menuStore'
+
 import  Cookie  from 'js-cookie'  
 
 
@@ -33,7 +35,7 @@ let { ruleForm } = toRefs(state);
 let ruleFormRef = ref();
 // 获取项目路由对象
 let router = useRouter();
-let store = useStore();
+let store = menuStore();
 
 const rules = reactive({
  
@@ -51,10 +53,11 @@ const  loginFn = () => {
         }).then(res => {
           if(res.code==200){
             Cookie.set('token',res.data.tokenHead+res.data.token,{expires:1/24});
-            store.dispatch("getAdminInfo").then(rec=>{
+            store.getMenus;
+          ///  store.dispatch("getAdminInfo").then(rec=>{
                 router.push('/homepage');
-            });
-           /*  getAdminInfoApi().then(
+          //  });
+           /*  Api().then(
               res=>{
                 console.log(res);
                 store.commit('updateMenus',res.data.menu)

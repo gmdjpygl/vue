@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 
 const instance = axios.create({
-    baseURL : 'http://localhost:9080/baseAdmin/',
+    baseURL : 'http://localhost:9080/multiDS/',
     timeout: 10000
 });
 

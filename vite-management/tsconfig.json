@@ -20,9 +20,19 @@
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     "paths": {      
-      "vuex": ["./node_modules/vuex/types"]   
-    }  
+      "vuex": ["./node_modules/vuex/types"] ,
+      "@/*":["src/*"]
+    },
+    "baseUrl": "./",
+   
+
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "typing.d.ts"],
+  "include": [
+    "src/**/*.ts", 
+    "src/**/*.d.ts", 
+    "src/**/*.tsx", 
+    "src/**/*.vue", 
+    "typing.d.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

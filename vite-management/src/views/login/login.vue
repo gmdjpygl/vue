@@ -11,6 +11,7 @@
       <el-button type="primary" @click="loginFn()">登录</el-button>
     </el-form-item>
   </el-form>
+ 
 </template>
 
 <script lang='ts' setup>
@@ -19,10 +20,11 @@ import { reactive, toRefs, ref,toRef} from 'vue'
 import { adminLoginApi ,getAdminInfoApi} from '../../request/api'
 import { useRouter } from 'vue-router' 
 //import { useStore } from 'vuex' 
-import {menuStore} from '../../store/menuStore'
+import {menuStore} from '@/store/menuStore.ts' 
+'../../store/menuStore'
 
 import  Cookie  from 'js-cookie'  
-
+console.log(globaVar);  //全局变更要写在index.html上
 
 const state = reactive({
   ruleForm: {

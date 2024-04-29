@@ -4,5 +4,17 @@ interface AdminObjItf {
   name?: string;
 }
 interface NewMenus {
-  [key: number]: menu
+  [key: number]: Menu
+}
+interface Menu {
+  id:number,
+  parentId:number,
+  createTime:string,
+  title:string,
+  level:number,
+  sort:number,
+  name:string,
+  icon:string,
+  hidden:number,
+  children?:Menu[]
 }

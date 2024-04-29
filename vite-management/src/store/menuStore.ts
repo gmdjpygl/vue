@@ -1,7 +1,9 @@
+// 引用defineStore ,创建pinia仓库
 import { defineStore } from 'pinia'
 import {getAdminInfoApi}  from '../request/api'
+// 导出menuStore仓库函数
 export const menuStore = defineStore('menuStore1', {
-   state: ():{menus:menu[]} => (
+   state: ():{menus:Menu[]} => (
       { 
         menus:[]
       }),
@@ -46,15 +48,4 @@ export const menuStore = defineStore('menuStore1', {
     },
     //persist: true,
 })
-interface menu {
-  id:number,
-  parentId:number,
-  createTime:string,
-  title:string,
-  level:number,
-  sort:number,
-  name:string,
-  icon:string,
-  hidden:number,
-  children?:menu[]
-}
+

@@ -43,6 +43,11 @@ import myPie from './components/myPie.vue'
 
 import { storeToRefs } from 'pinia'
 import {useCounterStore} from '../../store/useCounterStore'
+
+
+
+
+
 const store = useCounterStore();
 // 响应式
 const { name, count } =storeToRefs(store)

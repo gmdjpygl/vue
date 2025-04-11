@@ -31,7 +31,10 @@
 <br>
 {{ store.doubleCountPlusOne }}
 <br>
- <myPie :data="data" :a='a' />
+inputValue1:{{ inputValue1 }}
+<br>
+
+ <myPie :data="data" :a='a' v-model:count1="inputValue1"/>
   <router-view>
         
       </router-view>
@@ -45,7 +48,7 @@ import { storeToRefs } from 'pinia'
 import {useCounterStore} from '../../store/useCounterStore'
 
 
-
+const inputValue1 = ref();
 
 
 const store = useCounterStore();

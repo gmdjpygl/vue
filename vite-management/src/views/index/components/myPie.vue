@@ -1,6 +1,9 @@
 <!--  -->
 <template>
-
+<!--
+ <input v-model="model1"  />-->
+ <span @click="ff(111)">1111111111111</span>
+ <br>
 
 
   <el-radio-group v-model="selectLabel" @change="initPie">
@@ -16,6 +19,14 @@
 <script lang='ts' setup>
 import { reactive, toRefs, ref, onMounted, watch } from 'vue'
 import * as echarts from 'echarts';
+
+const model1 = defineModel("count1", {
+  type: String,
+  default: "aaa",
+});
+const ff=(v:any)=>{
+  model1.value=v;
+}
 
 
 const props = defineProps<{
